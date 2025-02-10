@@ -1,4 +1,5 @@
 from tkinter import *
+from functools import partial  # To prevent unwanted windows
 
 
 class Converter:
@@ -23,15 +24,27 @@ class Converter:
         self.to_help_button.grid(row=1, padx=5, pady=5)
 
     def to_help(self):
-        DisplayHelp()
+        """
+        Opens help dialogue box and disables help button
+        (so that users can't create multiple help boxes)
+        :return:
+        """
+        DisplayHelp(self)
 
 
 class DisplayHelp:
 
-    def __init__(self):
+    def __init__(self, partner):
         # setup dialog box and background colour
         background = "#caffce"
         self.help_box = Toplevel()
+
+        # disable help button
+        partner.to_help_button.config(state=DISABLED)
+
+        # If users press cross at top, closes help and releases help button
+        self.help_box.protocol('WM_DELETE_WINDOW',
+                               partial(self.close_help, partner))
 
         self.help_frame = Frame(self.help_box, width=300,
                                 height=200)
@@ -61,7 +74,8 @@ class DisplayHelp:
         self.dismiss_button = Button(self.help_frame,
                                      font=("Arial", "12", "bold"),
                                      text="Dismiss", bg="#16f053",
-                                     fg="#FFFFFF", command=self.close_help)
+                                     fg="#FFFFFF",
+                                     command=partial(self.close_help, partner))
         self.dismiss_button.grid(row=2, padx=10, pady=10)
 
         recolour_list = [self.help_frame, self.help_heading_label, self.help_text_label]
@@ -69,7 +83,12 @@ class DisplayHelp:
         for item in recolour_list:
             item.config(bg=background)
 
-    def close_help(self):
+    def close_help(self, partner):
+        """
+        Closes help dialogue box (and enables help button)
+        """
+        # Put help button back to normal
+        partner.to_help_button.config(state=NORMAL)
         self.help_box.destroy()
 
 
