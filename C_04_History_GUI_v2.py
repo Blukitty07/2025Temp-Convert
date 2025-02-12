@@ -12,8 +12,8 @@ class Converter:
         """temperature converter gui"""
 
         self.all_calculations_list = ['10.0°F to -12°C', '20.0°F to -7°C',
-                                      '30.0°F to -1°C', '40.0°F to 4°C', '50.0°F to 10°C',
-                                      '60.0°F to 16°C']
+                                      '30.0°F to -1°C', '40.0°F to 4°C',
+                                      '50.0°F to 10°C']
 
         self.button_frame = Frame(padx=10, pady=10)
         self.button_frame.grid()
@@ -44,7 +44,7 @@ class HistoryExport:
 
         self.history_box = Toplevel()
 
-        # diable history button
+        # disable history button
         partner.to_history_button.config(state=DISABLED)
 
         # If users press cross at top, closes history and
@@ -61,12 +61,31 @@ class HistoryExport:
             calc_amount = "all your"
         else:
             calc_back = "#ffe6cc"
-            calc_amount = (f"your recent calculations - " 
-                          f"showing {c.MAX_CALCS} / {len(calculations)}")
+            calc_amount = (f"your recent calculations - "
+                           f"showing {c.MAX_CALCS} / {len(calculations)}")
 
         # strings for long labels
         recent_intro_text = (f"Below are {calc_amount} calculations.  "
                              "(shown to the nearest degree)")
+
+        # Create string from circulations list (newest calculations first)
+        newest_first_string = ""
+        newest_first_list = list(reversed(calculations))
+
+        # Last item added in outside the for loop so that spacing is correct
+        if len(newest_first_list) <= c.MAX_CALCS:
+
+            for item in newest_first_list[:-1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[-1]
+
+        # If there are more than five items
+        else:
+            for item in newest_first_list[:c.MAX_CALCS - 1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[c.MAX_CALCS - 1]
 
         export_instructions_txt = ("Please push <Export> to save your calculations "
                                    "in a txt file. If the filename already exists")
@@ -77,7 +96,7 @@ class HistoryExport:
         history_labels_list = [
             ["History /  Export", ("Arial", "16", "bold"), None],
             [recent_intro_text, ("Arial", "11"), None],
-            ["Calculation list", ("Arial", "14"), calc_back],
+            [newest_first_string, ("Arial", "14"), calc_back],
             [export_instructions_txt, ("Arial", "11"), None]
         ]
 
