@@ -41,10 +41,6 @@ class HistoryExport:
     """
 
     def __init__(self, partner, calculations):
-        # set up dialogue box and background colour
-
-        green_back = "#D5E8D4"
-        peach_back = "#ffe6cc"
 
         self.history_box = Toplevel()
 
@@ -81,7 +77,7 @@ class HistoryExport:
         history_labels_list = [
             ["History /  Export", ("Arial", "16", "bold"), None],
             [recent_intro_text, ("Arial", "11"), None],
-            ["Calculation list", ("Arial", "14"), green_back],
+            ["Calculation list", ("Arial", "14"), calc_back],
             [export_instructions_txt, ("Arial", "11"), None]
         ]
 
