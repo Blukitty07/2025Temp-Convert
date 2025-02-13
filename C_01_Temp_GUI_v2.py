@@ -11,6 +11,7 @@ class Converter:
         Temperature converter GUI
         """
 
+        # set up gui frame
         self.temp_frame = Frame(padx=10, pady=10)
         self.temp_frame.grid()
 
@@ -48,8 +49,8 @@ class Converter:
 
         # button list ( button text | bg colour | command | row | coloum)
         button_details_list = [
-            ["To Celcius", "#de1f8b", "", 0, 0],
-            ["To Farenheit", "#0f16f2", "", 0, 1],
+            ["To Celsius", "#de1f8b", "", 0, 0],
+            ["To Fahrenheit", "#0f16f2", "", 0, 1],
             ["Help / Info", "#16f053", "", 1, 0],
             ["History / Export", "#af04c9", "", 1, 1]
         ]

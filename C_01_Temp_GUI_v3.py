@@ -77,18 +77,20 @@ class Converter:
 
         # Retrieve temperature to be converted
         to_convert = self.temp_entry.get()
-        print("to convert", to_convert)
 
         # reset label and entry box (if we had an error)
-        self.answer_error.config(fg="#004c99")
+        self.answer_error.config(fg="#004c99", font=("Arial", "13", "bold"))
         self.temp_entry.config(bg="#FFFFFF")
+
+        error = f"Enter a number more than / equal to {min_temp}"
+        has_errors = "no"
 
         # checks that amount to be converted is above absolute 0
         try:
             to_convert = float(to_convert)
             if to_convert >= min_temp:
                 error = ""
-                self.convert(min_temp)
+                self.convert(min_temp, to_convert)
             else:
                 error = "Too Low"
 
@@ -101,13 +103,14 @@ class Converter:
             self.temp_entry.config(bg="#F4CCCC")
             self.temp_entry.delete(0, END)
 
-# alerts to what it is being converted to
-    def convert(self, min_temp):
+    # alerts to what it is being converted to
+    def convert(self, min_temp, to_convert):
 
         if min_temp == c.ABS_ZERO_CELSIUS:
-            self.answer_error.config(text="Converting to F")
+            self.answer_error.config(text=f"Converting {to_convert}°C to °F")
         else:
-            self.answer_error.config(text="Converting to C")
+            self.answer_error.config(text=f"Converting {to_convert}°F to °C")
+
 
 # Main routine
 if __name__ == "__main__":

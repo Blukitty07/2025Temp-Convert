@@ -19,13 +19,13 @@ class Converter:
         self.button_frame = Frame(padx=10, pady=10)
         self.button_frame.grid()
 
-        self.to_history_button = Button(self.button_frame,
+        self.history_button = Button(self.button_frame,
                                         text="History / Export",
                                         bg="#af04c9",
                                         fg="#FFFFFF",
                                         font=("Arial", "12", "bold"),
                                         width=12, command=self.to_history)
-        self.to_history_button.grid(row=1, padx=5, pady=5)
+        self.history_button.grid(row=1, padx=5, pady=5)
 
     def to_history(self):
         """
@@ -46,7 +46,7 @@ class HistoryExport:
         self.history_box = Toplevel()
 
         # disable history button
-        partner.to_history_button.config(state=DISABLED)
+        partner.history_button.config(state=DISABLED)
 
         # If users press cross at top, closes history and
         # 'releases' history button
@@ -169,7 +169,7 @@ class HistoryExport:
         """closes history dialogue box (and enables the button)"""
 
         # put history button back to normal
-        partner.to_history_button.config(state=NORMAL)
+        partner.history_button.config(state=NORMAL)
         self.history_box.destroy()
 
 
